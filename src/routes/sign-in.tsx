@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AuthForm } from "@/components/AuthForm";
 
 export const Route = createFileRoute("/sign-in")({
+  ssr: false,
   head: () => ({ meta: [
     { title: "Sign in — Flight Price Notifier" },
     { name: "description", content: "Sign in to Flight Price Notifier." },
