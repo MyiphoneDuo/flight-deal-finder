@@ -71,7 +71,7 @@ export function AuthForm({ mode }: { mode: AuthMode }) {
             </Link>
           </div>
         </section>
-        <p className="mt-5 flex items-center justify-center gap-2 text-xs text-muted-foreground"><ShieldCheck className="size-4" /> Secure account access powered by Lovable Cloud</p>
+        <p className="mt-5 flex items-center justify-center gap-2 text-xs text-muted-foreground"><ShieldCheck className="size-4" /> Secure account access powered by Supabase</p>
       </div>
     </main>
   );

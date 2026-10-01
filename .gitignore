@@ -23,4 +23,8 @@ dist
 *.sln
 *.sw?
 
-.env
+# .env holds only browser-safe VITE_* values (publishable key) and is committed
+# so the Lovable preview and local builds use the same Supabase project.
+# Never put secret/service_role keys in it; use .env.local for local-only values.
+.env.local
+.env.*.local

@@ -11,7 +11,7 @@
 - Keep layouts fully responsive and accessible across mobile and desktop.
 
 ## Technical details
-- Use Lovable Cloud authentication only; create no custom tables.
+- Use Supabase authentication (the project's own Supabase project) only; create no custom tables.
 - Keep authentication state synchronized at the root and protect the app route before rendering.
 - Add unique page metadata for every public-facing route.
 - Verify sign-up, sign-in, protected routing, sign-out, and responsive presentation.
