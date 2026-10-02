@@ -1,4 +1,5 @@
-import { BellRing, LogOut, Plane } from "lucide-react";
+import { BellRing, CheckCircle2, LogOut, Plane, TriangleAlert } from "lucide-react";
+import { useState } from "react";
 import { useNavigate } from "react-router";
 
 import { Button } from "@/components/ui/button";
@@ -18,6 +19,13 @@ export default function AppDashboard() {
   });
   const user = useAuthenticatedUser();
   const navigate = useNavigate();
+  // ECPay sends the browser back via /ecpay-result → 302 → /app?purchase=success|failed.
+  // This banner is UX only — the subscription is activated by the server-to-server callback.
+  const [purchase] = useState(() => {
+    const v = new URLSearchParams(window.location.search).get("purchase");
+    if (v) window.history.replaceState(null, "", window.location.pathname);
+    return v;
+  });
 
   async function handleSignOut() {
     await supabase.auth.signOut();
@@ -47,9 +55,19 @@ export default function AppDashboard() {
           Hi {user.email}
         </h1>
         <p className="mt-4 max-w-2xl leading-7 text-muted-foreground">
-          選一條航線、設定你的目標價。每 30 分鐘檢查一次票價，達標時寄信通知你。
+          選一條航線、設定你的目標價，月訂閱 NT$300（綠界信用卡定期定額）。每 30 分鐘檢查一次票價，達標時寄信通知你。
         </p>
-        <PlanCards email={user.email ?? ""} />
+        {purchase === "success" && (
+          <div className="mt-8 flex items-center gap-2 rounded-2xl border border-white/70 bg-white/60 px-5 py-4 text-sm">
+            <CheckCircle2 className="size-4 text-primary" /> 付款完成！訂閱啟用中，幾秒內就會顯示「已訂閱」，並寄一封確認信給你。
+          </div>
+        )}
+        {purchase === "failed" && (
+          <div className="mt-8 flex items-center gap-2 rounded-2xl border border-white/70 bg-white/60 px-5 py-4 text-sm text-destructive">
+            <TriangleAlert className="size-4" /> 付款沒有完成，你可以在下方按「完成付款」再試一次。
+          </div>
+        )}
+        <PlanCards email={user.email ?? ""} justPaid={purchase === "success"} />
         <div className="mt-8 flex items-center gap-2 text-sm text-muted-foreground">
           <BellRing className="size-4 text-primary" /> 通知會寄到 {user.email}
         </div>
