@@ -9,11 +9,12 @@ const API_URL =
   (import.meta.env["VITE_FLIGHT_API_URL"] as string | undefined) ??
   "https://3paf1h3k8l.execute-api.us-east-1.amazonaws.com";
 
-type PlanName = "tokyo" | "seoul";
+type PlanName = "tokyo" | "seoul" | "london";
 
 const PLANS: { name: PlanName; label: string; route: string; hint: number }[] = [
   { name: "tokyo", label: "台北 ✈ 東京", route: "TPE-TYO", hint: 7000 },
   { name: "seoul", label: "台北 ✈ 首爾", route: "TPE-SEL", hint: 6400 },
+  { name: "london", label: "台北 ✈ 倫敦", route: "TPE-LON", hint: 22600 },
 ];
 
 type Subscription = { route: string; plan_name: PlanName; target_price: number; currency: string };
@@ -169,7 +170,7 @@ export function PlanCards({ email }: { email: string }) {
   }
 
   return (
-    <div className="mt-12 grid gap-6 md:grid-cols-2">
+    <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       {PLANS.map((p) => (
         <PlanCard
           key={p.name}
