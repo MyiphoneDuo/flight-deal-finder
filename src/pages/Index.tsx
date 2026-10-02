@@ -1,6 +1,8 @@
 import { ArrowRight, BellRing, Eye, Plane, XCircle } from "lucide-react";
 import { Link } from "react-router";
 
+import dawnHalo from "@/assets/dawn-halo.webp";
+import { DawnHalo } from "@/components/DawnHalo";
 import { Button } from "@/components/ui/button";
 import { usePageMeta } from "@/hooks/use-page-meta";
 
@@ -21,42 +23,58 @@ export default function Index() {
 
   return (
     <div className="min-h-screen overflow-hidden bg-background text-foreground">
-      <header className="relative z-20 border-b border-border/70">
-        <div className="mx-auto flex h-18 max-w-6xl items-center justify-between px-5 sm:px-8">
-          <Link to="/" className="flex items-center gap-2.5 font-semibold"><span className="flex size-8 items-center justify-center rounded-md bg-primary text-primary-foreground"><Plane className="size-4" /></span><span className="hidden sm:inline">Flight Price Notifier</span><span className="sm:hidden">FPN</span></Link>
-          <Button asChild variant="quiet"><Link to="/sign-in">Sign in / 登入 <ArrowRight /></Link></Button>
-        </div>
-      </header>
+      <div className="relative bg-dawn-sky">
+        {/* Morning mist drifting across the horizon */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-[linear-gradient(180deg,transparent,color-mix(in_oklab,white_55%,transparent)_60%,transparent)] blur-2xl" aria-hidden="true" />
 
-      <main>
-        <section className="relative mx-auto flex min-h-[690px] max-w-6xl flex-col justify-center px-5 py-24 sm:px-8 lg:min-h-[760px]">
-          <div className="pointer-events-none absolute left-1/2 top-0 h-[620px] w-[900px] -translate-x-1/2 bg-[radial-gradient(ellipse_at_center,color-mix(in_oklab,var(--primary)_18%,transparent),transparent_65%)]" />
-          <div className="relative z-10 max-w-4xl animate-rise">
-            <p className="mb-5 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary"><span className="h-px w-8 bg-primary" /> Taipei departures · Fare monitoring</p>
-            <h1 className="max-w-4xl text-5xl font-semibold leading-[1.03] sm:text-7xl lg:text-8xl">Flight Price<br/><span className="text-primary">Notifier</span></h1>
-            <p className="mt-8 max-w-2xl text-2xl font-medium leading-relaxed text-foreground sm:text-3xl">設定航線與目標價，<br className="hidden sm:block"/>機票降價就通知你</p>
-            <p className="mt-4 max-w-xl text-base leading-7 text-muted-foreground">Set a route and a target price — we email you when the fare drops.</p>
-            <div className="mt-9 flex flex-wrap items-center gap-4"><Button asChild variant="hero" size="lg"><Link to="/sign-up">Start watching fares <ArrowRight /></Link></Button><span className="text-sm text-muted-foreground">Tokyo · Seoul · More soon</span></div>
+        <header className="relative z-20">
+          <div className="mx-auto flex h-18 max-w-6xl items-center justify-between px-5 sm:px-8">
+            <Link to="/" className="flex items-center gap-2.5 font-semibold"><span className="flex size-8 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-[var(--shadow-violet)]"><Plane className="size-4" /></span><span className="hidden font-display text-xl tracking-wide sm:inline">Flight Price Notifier</span><span className="font-display text-xl sm:hidden">FPN</span></Link>
+            <Button asChild variant="quiet"><Link to="/sign-in">Sign in / 登入 <ArrowRight /></Link></Button>
           </div>
+        </header>
 
-          <div className="pointer-events-none absolute bottom-6 right-5 hidden h-72 w-[46%] lg:block" aria-hidden="true">
-            <svg viewBox="0 0 520 250" className="h-full w-full overflow-visible">
-              <path d="M28 190 C 145 40, 360 30, 490 152" fill="none" stroke="var(--flight-line)" strokeWidth="1.5" className="animate-route" />
-              <circle cx="28" cy="190" r="5" fill="var(--primary)"/><circle cx="490" cy="152" r="5" fill="var(--primary)"/>
-              <text x="12" y="218" fill="var(--muted-foreground)" fontSize="12">TPE</text><text x="476" y="180" fill="var(--muted-foreground)" fontSize="12">NRT</text>
-              <g transform="translate(250 57) rotate(10)"><path d="M-20 1 L20 -8 L25 -2 L4 9 L-1 24 L-7 25 L-5 9 L-20 6 Z" fill="var(--primary)"/></g>
-            </svg>
-          </div>
-        </section>
+        <main>
+          <section className="relative mx-auto grid min-h-[690px] max-w-6xl items-center gap-12 px-5 py-20 sm:px-8 lg:min-h-[760px] lg:grid-cols-[1.15fr_0.85fr]">
+            {/* Small screens: the halo floats behind the headline */}
+            <DawnHalo className="left-1/2 top-[42%] size-[380px] -translate-x-1/2 -translate-y-1/2 opacity-70 lg:hidden" />
 
-        <section className="border-y border-border bg-surface py-24">
+            <div className="relative z-10 max-w-4xl animate-rise">
+              <p className="mb-5 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary"><span className="h-px w-8 bg-primary" /> Taipei departures · Fare monitoring</p>
+              <h1 className="max-w-4xl font-display text-6xl font-semibold leading-[0.98] sm:text-8xl lg:text-[7.5rem]">Flight Price<br/><span className="bg-[linear-gradient(100deg,var(--primary),oklch(0.66_0.11_45)_55%,oklch(0.6_0.09_15))] bg-clip-text italic text-transparent">Notifier</span></h1>
+              <p className="mt-8 max-w-2xl font-display text-2xl font-medium leading-relaxed text-foreground sm:text-3xl">設定航線與目標價，<br className="hidden sm:block"/>機票降價就通知你</p>
+              <p className="mt-4 max-w-xl text-base leading-7 text-muted-foreground">Set a route and a target price — we email you when the fare drops.</p>
+              <div className="mt-9 flex flex-wrap items-center gap-4"><Button asChild variant="hero" size="lg"><Link to="/sign-up">Start watching fares <ArrowRight /></Link></Button><span className="text-sm text-muted-foreground">Tokyo · Seoul · More soon</span></div>
+            </div>
+
+            {/* Large screens: the dawn scene framed in an arch, wrapped by the halo */}
+            <div className="relative hidden h-[560px] animate-rise lg:block" aria-hidden="true">
+              <DawnHalo className="left-1/2 top-[44%] size-[470px] -translate-x-1/2 -translate-y-1/2" />
+              <div className="absolute left-1/2 top-1/2 h-[500px] w-[300px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-t-full rounded-b-3xl border border-white/70 shadow-[0_30px_80px_-30px_color-mix(in_oklab,var(--dawn-taupe)_55%,transparent)]">
+                <img src={dawnHalo} alt="" className="size-full object-cover" loading="eager" />
+              </div>
+              <svg viewBox="0 0 520 250" className="absolute -left-6 top-2 h-56 w-[110%] overflow-visible">
+                <path d="M28 190 C 145 40, 360 30, 490 152" fill="none" stroke="var(--flight-line)" strokeWidth="1.5" className="animate-route" />
+                <circle cx="28" cy="190" r="5" fill="var(--primary)"/><circle cx="490" cy="152" r="5" fill="var(--primary)"/>
+                <text x="12" y="218" fill="var(--muted-foreground)" fontSize="12">TPE</text><text x="476" y="180" fill="var(--muted-foreground)" fontSize="12">NRT</text>
+                <g transform="translate(250 57) rotate(10)"><path d="M-20 1 L20 -8 L25 -2 L4 9 L-1 24 L-7 25 L-5 9 L-20 6 Z" fill="var(--primary)"/></g>
+              </svg>
+            </div>
+          </section>
+        </main>
+      </div>
+
+      {/* The lake: the sky mirrored below the horizon */}
+      <div className="relative bg-dawn-lake">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,color-mix(in_oklab,white_90%,transparent),transparent)]" aria-hidden="true" />
+        <section className="py-24">
           <div className="mx-auto max-w-6xl px-5 sm:px-8">
-            <div className="mb-12 max-w-2xl"><p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">How it works</p><h2 className="mt-3 text-3xl font-semibold sm:text-4xl">花少一點，飛遠一點。</h2></div>
-            <div className="grid gap-px overflow-hidden rounded-lg border border-border bg-border md:grid-cols-3">
-              {features.map((feature, index) => (
-                <article key={feature.title} className="group relative min-h-72 bg-card p-7 transition-colors hover:bg-surface-raised sm:p-8">
-                  <span className="absolute right-6 top-6 text-xs font-medium text-muted-foreground">{feature.number}</span>
-                  <feature.icon className="mb-10 size-7 text-primary" />
+            <div className="mb-12 max-w-2xl"><p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">How it works</p><h2 className="mt-3 font-display text-4xl font-semibold sm:text-5xl">花少一點，飛遠一點。</h2></div>
+            <div className="grid gap-5 md:grid-cols-3">
+              {features.map((feature) => (
+                <article key={feature.title} className="glass group relative min-h-72 rounded-2xl p-7 transition-transform duration-500 hover:-translate-y-1 sm:p-8">
+                  <span className="absolute right-6 top-6 font-display text-lg italic text-muted-foreground">{feature.number}</span>
+                  <span className="mb-10 flex size-12 items-center justify-center rounded-full bg-[radial-gradient(circle_at_50%_40%,var(--dawn-sun),var(--dawn-apricot))] shadow-[0_0_24px_4px_color-mix(in_oklab,var(--dawn-sun)_70%,transparent)]"><feature.icon className="size-5 text-primary" /></span>
                   <h3 className="text-xl font-semibold">{feature.title}</h3><p className="mt-1 text-xs font-medium uppercase tracking-[0.12em] text-primary">{feature.subtitle}</p>
                   <p className="mt-5 text-sm leading-7 text-muted-foreground">{feature.body}</p>
                 </article>
@@ -64,8 +82,8 @@ export default function Index() {
             </div>
           </div>
         </section>
-      </main>
-      <footer className="mx-auto flex max-w-6xl items-center justify-between px-5 py-8 text-xs text-muted-foreground sm:px-8"><span>© 2026 Flight Price Notifier</span><span>Taipei · Taiwan</span></footer>
+        <footer className="mx-auto flex max-w-6xl items-center justify-between px-5 py-8 text-xs text-muted-foreground sm:px-8"><span>© 2026 Flight Price Notifier</span><span>Taipei · Taiwan</span></footer>
+      </div>
     </div>
   );
 }
